@@ -10,9 +10,11 @@ const App: React.FC = () => {
       <section className="container">
         <div className="row">
           <section className="col-6">
+            <h2 className="h2 mb-3">React Hook Form</h2>
             <HookForm />
           </section>
           <section className="col-6">
+            <h2 className="h2 mb-3">Formik</h2>
             <Formik />
           </section>
         </div>
