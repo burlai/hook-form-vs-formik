@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import HookForm from "./components/HookForm";
 import Formik from "./components/Formik";
+import NativeHTMLForm from "./components/NativeHTMLForm";
 
 const App: React.FC = () => {
   return (
@@ -16,6 +17,12 @@ const App: React.FC = () => {
           <section className="col-6">
             <h2 className="h2 mb-3">Formik</h2>
             <Formik />
+          </section>
+        </div>
+        <div className="row mt-4">
+          <section className="col-6">
+            <h2 className="h2 mb-3">Native HTML form</h2>
+            <NativeHTMLForm />
           </section>
         </div>
       </section>
