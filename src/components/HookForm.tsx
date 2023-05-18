@@ -1,13 +1,21 @@
 import React from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, useController } from "react-hook-form";
 import { FormValues } from "../interfaces";
 
 const FormComponent: React.FC = () => {
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>();
+
+  const { field: nameField } = useController({
+    name: "nameControlled",
+    control,
+    rules: { required: "Name is required" },
+    defaultValue: "",
+  });
 
   const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
     console.log("React Hook Form data:");
@@ -17,17 +25,21 @@ const FormComponent: React.FC = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="container mt-4">
       <div className="mb-3">
-        <label htmlFor="name" className="form-label">
-          Name
+        <label htmlFor="nameControlled" className="form-label">
+          Name - controlled with useController() hook
         </label>
         <input
           type="text"
-          id="name"
-          className={`form-control ${errors.name ? "is-invalid" : ""}`}
-          {...register("name", { required: "Name is required" })}
+          id="nameControlled"
+          className={`form-control ${
+            errors.nameControlled ? "is-invalid" : ""
+          }`}
+          {...nameField}
         />
-        {errors.name && (
-          <span className="text-danger">{errors.name.message}</span>
+        {errors.nameControlled && (
+          <span className="invalid-feedback">
+            {errors.nameControlled.message}
+          </span>
         )}
       </div>
       <div className="mb-3">
@@ -47,7 +59,7 @@ const FormComponent: React.FC = () => {
           })}
         />
         {errors.email && (
-          <span className="text-danger">{errors.email.message}</span>
+          <span className="invalid-feedback">{errors.email.message}</span>
         )}
       </div>
       <div className="mb-3">
@@ -61,7 +73,7 @@ const FormComponent: React.FC = () => {
           {...register("phoneNumber", { required: "Phone number is required" })}
         />
         {errors.phoneNumber && (
-          <span className="text-danger">{errors.phoneNumber.message}</span>
+          <span className="invalid-feedback">{errors.phoneNumber.message}</span>
         )}
       </div>
       <div className="mb-3">
@@ -75,7 +87,7 @@ const FormComponent: React.FC = () => {
           {...register("zipCode", { required: "ZIP code is required" })}
         />
         {errors.zipCode && (
-          <span className="text-danger">{errors.zipCode.message}</span>
+          <span className="invalid-feedback">{errors.zipCode.message}</span>
         )}
       </div>
       <button type="submit" className="btn btn-primary">

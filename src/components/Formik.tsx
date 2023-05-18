@@ -1,9 +1,38 @@
 import React from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Field, Form, ErrorMessage, useField } from "formik";
 import { FormValues } from "../interfaces";
 
+const CustomTextInput: React.FC<{ fieldId: string; fieldName: string }> = ({
+  fieldId,
+  fieldName,
+}) => {
+  const [field, meta] = useField(fieldId);
+
+  return (
+    <>
+      <label htmlFor={fieldId} className="form-label">
+        {fieldName}
+      </label>
+      <input
+        type="text"
+        className={`form-control ${
+          meta.error && meta.touched ? "is-invalid" : ""
+        }`}
+        {...field}
+      />
+      {meta.error && meta.touched && (
+        <ErrorMessage
+          name={fieldId}
+          component="div"
+          className="invalid-feedback"
+        />
+      )}
+    </>
+  );
+};
+
 const initialValues: FormValues = {
-  name: "",
+  nameControlled: "",
   email: "",
   phoneNumber: "",
   zipCode: "",
@@ -12,8 +41,8 @@ const initialValues: FormValues = {
 const validate = (values: FormValues): Partial<FormValues> => {
   const errors: Partial<FormValues> = {};
 
-  if (!values.name) {
-    errors.name = "Name is required";
+  if (!values.nameControlled) {
+    errors.nameControlled = "Name is required";
   }
 
   if (!values.email) {
@@ -48,21 +77,9 @@ const FormComponent: React.FC = () => {
       {({ errors, touched }) => (
         <Form className="container mt-4">
           <div className="mb-3">
-            <label htmlFor="name" className="form-label">
-              Name
-            </label>
-            <Field
-              type="text"
-              id="name"
-              name="name"
-              className={`form-control ${
-                errors.name && touched.name ? "is-invalid" : ""
-              }`}
-            />
-            <ErrorMessage
-              name="name"
-              component="div"
-              className="invalid-feedback"
+            <CustomTextInput
+              fieldId="nameControlled"
+              fieldName="Name - controlled with useField() hook"
             />
           </div>
           <div className="mb-3">
