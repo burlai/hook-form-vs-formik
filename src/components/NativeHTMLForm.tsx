@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 
 interface FormData {
   name: string;
@@ -11,8 +11,6 @@ const SimpleForm: React.FC = () => {
     email: "",
   });
 
-  const rerenderCountRef = useRef(0);
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
@@ -21,10 +19,6 @@ const SimpleForm: React.FC = () => {
     }));
   };
 
-  useEffect(() => {
-    rerenderCountRef.current += 1;
-  });
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log("Submitted data:", formData);
@@ -32,8 +26,10 @@ const SimpleForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="name">Name:</label>
+      <div className="mb-3">
+        <label htmlFor="name" className="me-2">
+          Name:
+        </label>
         <input
           type="text"
           id="name"
@@ -42,8 +38,10 @@ const SimpleForm: React.FC = () => {
           onChange={handleChange}
         />
       </div>
-      <div>
-        <label htmlFor="email">Email:</label>
+      <div className="mb-3">
+        <label htmlFor="email" className="me-2">
+          Email:
+        </label>
         <input
           type="email"
           id="email"
@@ -52,7 +50,6 @@ const SimpleForm: React.FC = () => {
           onChange={handleChange}
         />
       </div>
-      <p>Rerender Count: {rerenderCountRef.current}</p>
       <button type="submit">Submit</button>
     </form>
   );
