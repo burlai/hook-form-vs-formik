@@ -11,7 +11,7 @@ const FormComponent: React.FC = () => {
   } = useForm<FormValues>();
 
   const { field: nameField } = useController({
-    name: "nameControlled",
+    name: "nameCustom",
     control,
     rules: { required: "Name is required" },
     defaultValue: "",
@@ -25,21 +25,17 @@ const FormComponent: React.FC = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="container mt-4">
       <div className="mb-3">
-        <label htmlFor="nameControlled" className="form-label">
-          Name - controlled with useController() hook
+        <label htmlFor="nameCustom" className="form-label">
+          Name - custom with useController() hook
         </label>
         <input
           type="text"
-          id="nameControlled"
-          className={`form-control ${
-            errors.nameControlled ? "is-invalid" : ""
-          }`}
+          id="nameCustom"
+          className={`form-control ${errors.nameCustom ? "is-invalid" : ""}`}
           {...nameField}
         />
-        {errors.nameControlled && (
-          <span className="invalid-feedback">
-            {errors.nameControlled.message}
-          </span>
+        {errors.nameCustom && (
+          <span className="invalid-feedback">{errors.nameCustom.message}</span>
         )}
       </div>
       <div className="mb-3">

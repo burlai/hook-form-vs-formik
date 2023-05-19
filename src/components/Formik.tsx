@@ -2,10 +2,11 @@ import React from "react";
 import { Formik, Field, Form, ErrorMessage, useField } from "formik";
 import { FormValues } from "../interfaces";
 
-const CustomTextInput: React.FC<{ fieldId: string; fieldName: string }> = ({
-  fieldId,
-  fieldName,
-}) => {
+const CustomTextInput: React.FC<{
+  fieldId: string;
+  fieldName: string;
+  errorMessage: string;
+}> = ({ fieldId, fieldName, errorMessage }) => {
   const [field, meta] = useField(fieldId);
 
   return (
@@ -21,18 +22,16 @@ const CustomTextInput: React.FC<{ fieldId: string; fieldName: string }> = ({
         {...field}
       />
       {meta.error && meta.touched && (
-        <ErrorMessage
-          name={fieldId}
-          component="div"
-          className="invalid-feedback"
-        />
+        <ErrorMessage name={fieldId}>
+          {() => <div className="invalid-feedback">{errorMessage}</div>}
+        </ErrorMessage>
       )}
     </>
   );
 };
 
 const initialValues: FormValues = {
-  nameControlled: "",
+  nameCustom: "",
   email: "",
   phoneNumber: "",
   zipCode: "",
@@ -41,8 +40,8 @@ const initialValues: FormValues = {
 const validate = (values: FormValues): Partial<FormValues> => {
   const errors: Partial<FormValues> = {};
 
-  if (!values.nameControlled) {
-    errors.nameControlled = "Name is required";
+  if (!values.nameCustom) {
+    errors.nameCustom = "Name is required";
   }
 
   if (!values.email) {
@@ -78,8 +77,9 @@ const FormComponent: React.FC = () => {
         <Form className="container mt-4">
           <div className="mb-3">
             <CustomTextInput
-              fieldId="nameControlled"
-              fieldName="Name - controlled with useField() hook"
+              fieldId="nameCustom"
+              fieldName="Name - custom with useField() hook"
+              errorMessage="Custome name field is required"
             />
           </div>
           <div className="mb-3">

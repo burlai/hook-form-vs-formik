@@ -1,5 +1,5 @@
 export interface FormValues {
-  nameControlled: string;
+  nameCustom: string;
   email: string;
   phoneNumber: string;
   zipCode: string;
