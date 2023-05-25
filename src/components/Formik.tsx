@@ -2,17 +2,17 @@ import React from "react";
 import { Formik, Field, Form, ErrorMessage, useField } from "formik";
 import { FormValues } from "../interfaces";
 
-const CustomTextInput: React.FC<{
+const CustomInput: React.FC<{
   fieldId: string;
-  fieldName: string;
+  label: string;
   errorMessage: string;
-}> = ({ fieldId, fieldName, errorMessage }) => {
-  const [field, meta] = useField(fieldId);
+}> = ({ fieldId, label, errorMessage }) => {
+  const [field, meta] = useField(fieldId); // fieldId is a field identifier in Formik
 
   return (
     <>
       <label htmlFor={fieldId} className="form-label">
-        {fieldName}
+        {label}
       </label>
       <input
         type="text"
@@ -76,10 +76,10 @@ const FormComponent: React.FC = () => {
       {({ errors, touched }) => (
         <Form className="container mt-4">
           <div className="mb-3">
-            <CustomTextInput
+            <CustomInput
               fieldId="nameCustom"
-              fieldName="Name - custom with useField() hook"
-              errorMessage="Custome name field is required"
+              label="Name - custom with useField() hook"
+              errorMessage="Custom name field is required"
             />
           </div>
           <div className="mb-3">

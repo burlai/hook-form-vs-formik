@@ -10,12 +10,35 @@ const FormComponent: React.FC = () => {
     formState: { errors },
   } = useForm<FormValues>();
 
-  const { field: nameField } = useController({
-    name: "nameCustom",
-    control,
-    rules: { required: "Name is required" },
-    defaultValue: "",
-  });
+  const CustomInput: React.FC<{
+    fieldId: "nameCustom" | "email" | "phoneNumber" | "zipCode";
+    label: string;
+    errorMessage: string;
+    rules?: any;
+  }> = ({ fieldId, label, errorMessage, rules }) => {
+    const {
+      field: { ref, ...inputProps },
+      fieldState: { invalid, error, isTouched, isDirty },
+      formState: { touchedFields, dirtyFields },
+    } = useController({
+      name: fieldId, // name is a field identifier in Hook Form, it is required
+      control,
+      rules,
+    });
+
+    return (
+      <>
+        <label className="form-label">{label}</label>
+        <input
+          type="text"
+          className={`form-control ${invalid ? "is-invalid" : ""}`}
+          ref={ref}
+          {...inputProps}
+        />
+        {invalid && <div className="invalid-feedback">{errorMessage}</div>}
+      </>
+    );
+  };
 
   const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
     console.log("React Hook Form data:");
@@ -24,20 +47,14 @@ const FormComponent: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="container mt-4">
-      <div className="mb-3">
-        <label htmlFor="nameCustom" className="form-label">
-          Name - custom with useController() hook
-        </label>
-        <input
-          type="text"
-          id="nameCustom"
-          className={`form-control ${errors.nameCustom ? "is-invalid" : ""}`}
-          {...nameField}
-        />
-        {errors.nameCustom && (
-          <span className="invalid-feedback">{errors.nameCustom.message}</span>
-        )}
-      </div>
+      <CustomInput
+        fieldId="nameCustom"
+        label="Name - custom with useController() hook"
+        errorMessage="Custom name field is required"
+        rules={{
+          required: true,
+        }}
+      />
       <div className="mb-3">
         <label htmlFor="email" className="form-label">
           Email
