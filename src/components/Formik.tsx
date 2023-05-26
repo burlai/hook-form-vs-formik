@@ -74,7 +74,7 @@ const FormComponent: React.FC = () => {
       onSubmit={handleSubmit}
     >
       {({ errors, touched }) => (
-        <Form className="container mt-4">
+        <Form className="mt-4">
           <div className="mb-3">
             <CustomInput
               fieldId="nameCustom"

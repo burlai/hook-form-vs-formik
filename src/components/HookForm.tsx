@@ -46,15 +46,17 @@ const FormComponent: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="container mt-4">
-      <CustomInput
-        fieldId="nameCustom"
-        label="Name - custom with useController() hook"
-        errorMessage="Custom name field is required"
-        rules={{
-          required: true,
-        }}
-      />
+    <form onSubmit={handleSubmit(onSubmit)} className="mt-4">
+      <div className="mb-3">
+        <CustomInput
+          fieldId="nameCustom"
+          label="Name - custom with useController() hook"
+          errorMessage="Custom name field is required"
+          rules={{
+            required: true,
+          }}
+        />
+      </div>
       <div className="mb-3">
         <label htmlFor="email" className="form-label">
           Email

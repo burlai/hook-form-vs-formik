@@ -17,7 +17,8 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.9",
     "vite": "^4.1.4",
-    "yup": "^1.2.0"
+    "yup": "^1.2.0",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
