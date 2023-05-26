@@ -18,13 +18,18 @@ const FormComponent: React.FC = () => {
   }> = ({ fieldId, label, errorMessage, rules }) => {
     const {
       field: { ref, ...inputProps },
-      fieldState: { invalid, error, isTouched, isDirty },
+      fieldState: { invalid },
       formState: { touchedFields, dirtyFields },
     } = useController({
       name: fieldId, // name is a field identifier in Hook Form, it is required
       control,
       rules,
     });
+
+    // console.log(`React Hook Form touched fields:`);
+    // console.log(touchedFields);
+    // console.log("React Hook Form dirty fields");
+    // console.log(dirtyFields);
 
     return (
       <>
